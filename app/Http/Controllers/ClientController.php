@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\facades\DB;
+ 
 
 class ClientController extends Controller
 {
@@ -32,17 +34,52 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         //
-       $client = new Client;
-       $client->name=$request->name;
-       $client->email=$request->email;
-       $client->phone=$request->phone;
-       $client->address=$request->address;
-       $client->save();
+       
+      
+/*metodo1 insert
+
+ $client->name=$request->name;
+        $client->email=$request->email;
+        $client->phone=$request->phone;
+        $client->address=$request->address;
+        $client->save();
         $data=[
-            'message'=> 'Registrado correctamente',
+            'message'=> 'Actualizado correctamente',
             'cliente'=> $client
         ];
        return response()->json($data);
+
+
+**metodo2
+       $arrayObjeto = array(
+        'name'=>$request->name,
+        'email'=>$request->email,
+        'phone'=>$request->phone,
+        'address'=>$request->address,
+       );
+        $resultado = DB::table('clients')->insert($arrayObjeto);
+           $data=[
+            'message'=> 'Registrado correctamente',
+            'cliente'=> $resultado
+        ];
+       return response()->json($data);
+       */
+      $name=$request->name;
+      $phone=$request->phone;
+      $email=$request->email;
+      $address=$request->address;
+
+  $sql = "INSERT INTO clients(name,phone,email,address) VALUES ('$name','$phone','$email','$address')";
+        
+  $resultado = DB::insert($sql);
+           $data=[
+            'message'=> 'Registrado correctamente',
+            'cliente'=> $resultado
+        ];
+       return response()->json($data);
+
+       
+    
     }
 
     /**
@@ -94,4 +131,12 @@ class ClientController extends Controller
         ];
        return response()->json($data);
     }
+
+    public function ListarClientes(){
+         $data=Client::ListClientes();
+        return response()->json($data);
+
+
+    }
+    
 }

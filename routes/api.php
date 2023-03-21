@@ -11,4 +11,5 @@ Route::post('/clients','App\Http\Controllers\ClientController@store');
 Route::get('/clients/{client}','App\Http\Controllers\ClientController@show');
 Route::put('/clients/{id}','App\Http\Controllers\ClientController@update');
 Route::delete('/clients/{client}','App\Http\Controllers\ClientController@destroy');
+Route::get('/listar','App\Http\Controllers\ClientController@ListarClientes');
 
